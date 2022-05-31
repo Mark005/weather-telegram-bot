@@ -1,0 +1,3 @@
+telegram:
+  weather-bot:
+    token: ${BOT_TOKEN:}
