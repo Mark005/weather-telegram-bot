@@ -60,7 +60,6 @@ public class WeatherBot extends TelegramLongPollingBot {
         commandSetter.setCommands(this);
     }
 
-
     @Override
     @SneakyThrows
     public void onUpdateReceived(Update update) {
