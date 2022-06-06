@@ -19,7 +19,7 @@ public interface OpenMeteoClient {
     OpenMeteoResponse getForecast(@RequestParam("latitude") Double latitude,
                                   @RequestParam("longitude") Double longitude,
                                   @RequestParam("hourly") List<String> hourly,
-                                  @RequestParam("daily") String daily,
+                                  @RequestParam("daily") List<String> daily,
                                   @RequestParam("timezone") String timezone);
 
 
