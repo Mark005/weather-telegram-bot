@@ -1,3 +1,7 @@
 telegram:
   weather-bot:
     token: ${BOT_TOKEN:}
+
+client:
+  open-meteo:
+    base-url: ${OPEN_METEO_BASE_URL:}
