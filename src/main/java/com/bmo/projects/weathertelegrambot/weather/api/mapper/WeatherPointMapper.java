@@ -1,4 +1,4 @@
-package com.bmo.projects.weathertelegrambot.weather.service.mapper;
+package com.bmo.projects.weathertelegrambot.weather.api.mapper;
 
 import com.bmo.projects.weathertelegrambot.configs.MapStructCommonConfig;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;

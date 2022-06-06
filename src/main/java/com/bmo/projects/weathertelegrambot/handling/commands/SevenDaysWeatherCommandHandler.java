@@ -2,8 +2,10 @@ package com.bmo.projects.weathertelegrambot.handling.commands;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
 import com.bmo.projects.weathertelegrambot.model.CommandEnum;
+import com.bmo.projects.weathertelegrambot.model.DayForecast;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
+import com.bmo.projects.weathertelegrambot.utils.WeatherPrinterUtils;
 import com.bmo.projects.weathertelegrambot.weather.service.ForecastService;
 import com.bmo.projects.weathertelegrambot.weather.service.LocationStore;
 import lombok.RequiredArgsConstructor;
@@ -12,17 +14,18 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class LocalWeatherCommandHandler implements CommandHandler {
+public class SevenDaysWeatherCommandHandler implements CommandHandler {
     private final LocationStore locationStore;
     private final ForecastService forecastService;
 
     @Override
     public CommandEnum getHandlingCommand() {
-        return CommandEnum.LOCAL_WEATHER;
+        return CommandEnum.SEVEN_DAYS_WEATHER;
     }
 
     @SneakyThrows
@@ -35,23 +38,11 @@ public class LocalWeatherCommandHandler implements CommandHandler {
         }
 
         Location location = locationOptional.get();
-        WeatherPoint currentWeather = forecastService.getCurrentWeather(
+        List<DayForecast> sevenDaysForecast = forecastService.getSevenDaysForecast(
                 location.getLatitude(),
                 location.getLongitude());
 
-        String responsePattern = """
-                Temperature \uD83C\uDF21️ - %.1f С
-                Precipitations \uD83D\uDCA7 - %s мм
-                Cloud cover ⛅ - %s%%
-                Humidity \uD83C\uDF2B -  %s%%
-                """;
-
-        bot.sendUpdateResponseMessage(
-                responsePattern.formatted(
-                        currentWeather.getTemperature(),
-                        currentWeather.getPrecipitations(),
-                        currentWeather.getCloudCoverPercent(),
-                        currentWeather.getHumidity()),
-                update);
+        String response = WeatherPrinterUtils.formSevenDaysForecast(sevenDaysForecast);
+        bot.sendUpdateResponseMessage(response, update);
     }
 }

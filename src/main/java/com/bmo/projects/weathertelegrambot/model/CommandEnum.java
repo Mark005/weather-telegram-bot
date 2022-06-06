@@ -14,7 +14,7 @@ public enum CommandEnum {
     START("/start"),
     LOCAL_WEATHER("Current weather"),
     TODAY_WEATHER("Today's weather"),
-    FIVE_DAYS_FORECAST("5 Days forecast");
+    SEVEN_DAYS_WEATHER("7 Days forecast");
 
     private final String command;
 

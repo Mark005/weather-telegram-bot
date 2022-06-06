@@ -118,7 +118,6 @@
                         </compilerArg>
                     </compilerArgs>
                     <encoding>UTF-8</encoding>
-                    <fork>true</fork>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                     <source>${java.version}</source>

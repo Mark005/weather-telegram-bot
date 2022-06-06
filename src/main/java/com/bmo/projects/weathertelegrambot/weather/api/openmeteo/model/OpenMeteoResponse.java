@@ -19,5 +19,5 @@ public class OpenMeteoResponse {
 
     private Hourly hourly;
 
-
+    private Daily daily;
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -13,5 +14,16 @@ import java.util.List;
 @AllArgsConstructor
 public class DayForecast {
 
-    private List<WeatherPoint> weatherPoints;
+    private LocalDate date;
+
+    private Double maxDailyTemperature;
+
+    private Double minDailyTemperature;
+
+    private Double precipitations;
+
+    private Integer precipitationHours;
+
+    private Integer maxWindSpeed;
+
 }

@@ -1,11 +1,13 @@
 package com.bmo.projects.weathertelegrambot.weather.service;
 
+import com.bmo.projects.weathertelegrambot.model.DayForecast;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.TimezoneMapper;
+import com.bmo.projects.weathertelegrambot.weather.api.mapper.DailyForecastMapper;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.OpenMeteoClient;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.model.Hourly;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.model.OpenMeteoResponse;
-import com.bmo.projects.weathertelegrambot.weather.service.mapper.WeatherPointMapper;
+import com.bmo.projects.weathertelegrambot.weather.api.mapper.WeatherPointMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.stream.IntStream;
 public class ForecastServiceImpl implements ForecastService {
     private final OpenMeteoClient openMeteoClient;
     private final WeatherPointMapper weatherPointMapper;
+    private final DailyForecastMapper dailyForecastMapper;
 
     @Override
     public List<WeatherPoint> getFulForecast(double latitude, double longitude) {
@@ -33,7 +36,7 @@ public class ForecastServiceImpl implements ForecastService {
                         "cloudcover",
                         "pressure_msl",
                         "relativehumidity_2m"),
-                "weathercode",
+                null,
                 TimezoneMapper.latLngToTimezoneString(latitude, longitude));
 
         return weatherPointMapper.map(forecast.getHourly());
@@ -49,7 +52,7 @@ public class ForecastServiceImpl implements ForecastService {
                         "cloudcover",
                         "pressure_msl",
                         "relativehumidity_2m"),
-                "weathercode",
+                null,
                 TimezoneMapper.latLngToTimezoneString(latitude, longitude));
 
         String usersTimezone = TimezoneMapper.latLngToTimezoneString(latitude, longitude);
@@ -71,6 +74,22 @@ public class ForecastServiceImpl implements ForecastService {
     }
 
     @Override
+    public List<DayForecast> getSevenDaysForecast(double latitude, double longitude) {
+        OpenMeteoResponse forecast = openMeteoClient.getForecast(
+                latitude,
+                longitude,
+                null,
+                List.of("temperature_2m_max",
+                        "temperature_2m_min",
+                        "precipitation_sum",
+                        "precipitation_hours",
+                        "windspeed_10m_max"),
+                TimezoneMapper.latLngToTimezoneString(latitude, longitude));
+
+        return dailyForecastMapper.map(forecast.getDaily());
+    }
+
+    @Override
     public WeatherPoint getCurrentWeather(double latitude, double longitude) {
         String usersTimezone = TimezoneMapper.latLngToTimezoneString(latitude, longitude);
         log.info("User timeZone - {}", usersTimezone);
@@ -83,7 +102,7 @@ public class ForecastServiceImpl implements ForecastService {
                         "cloudcover",
                         "pressure_msl",
                         "relativehumidity_2m"),
-                "weathercode",
+                null,
                 usersTimezone);
 
         Hourly hourly = forecast.getHourly();
