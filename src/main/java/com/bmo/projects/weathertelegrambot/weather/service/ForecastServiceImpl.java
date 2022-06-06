@@ -1,33 +1,30 @@
 package com.bmo.projects.weathertelegrambot.weather.service;
 
-import com.bmo.projects.weathertelegrambot.model.DayForecast;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.TimezoneMapper;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.OpenMeteoClient;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.model.Hourly;
 import com.bmo.projects.weathertelegrambot.weather.api.openmeteo.model.OpenMeteoResponse;
+import com.bmo.projects.weathertelegrambot.weather.service.mapper.WeatherPointMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.stream.IntStream;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ForecastServiceImpl implements ForecastService {
     private final OpenMeteoClient openMeteoClient;
+    private final WeatherPointMapper weatherPointMapper;
 
     @Override
     public List<WeatherPoint> getFulForecast(double latitude, double longitude) {
-
         OpenMeteoResponse forecast = openMeteoClient.getForecast(
                 latitude,
                 longitude,
@@ -39,22 +36,38 @@ public class ForecastServiceImpl implements ForecastService {
                 "weathercode",
                 TimezoneMapper.latLngToTimezoneString(latitude, longitude));
 
-        List<WeatherPoint> weatherPointList = new ArrayList<>();
-        Hourly hourly = forecast.getHourly();
-        for (int i = 0; i < 168; i++) {
-            WeatherPoint newWeatherPoint =
-                    WeatherPoint.builder()
-                            .dateTime(hourly.getTime().get(i))
-                            .temperature(hourly.getTemperature().get(i))
-                            .precipitations(hourly.getPrecipitation().get(i))
-                            .cloudCoverPercent(hourly.getCloudCover().get(i))
-                            .humidity(hourly.getRelativeHumidity().get(i))
-                            .build();
+        return weatherPointMapper.map(forecast.getHourly());
+    }
 
-            weatherPointList.add(newWeatherPoint);
-        }
+    @Override
+    public List<WeatherPoint> getTodayDetailedForecast(double latitude, double longitude) {
+        OpenMeteoResponse forecast = openMeteoClient.getForecast(
+                latitude,
+                longitude,
+                List.of("temperature_2m",
+                        "precipitation",
+                        "cloudcover",
+                        "pressure_msl",
+                        "relativehumidity_2m"),
+                "weathercode",
+                TimezoneMapper.latLngToTimezoneString(latitude, longitude));
 
-        return weatherPointList;
+        String usersTimezone = TimezoneMapper.latLngToTimezoneString(latitude, longitude);
+        log.info("User timeZone - {}", usersTimezone);
+
+        List<WeatherPoint> weatherPointsAfterCurrentTime =
+                weatherPointMapper.map(forecast.getHourly())
+                        .stream()
+                        .filter(weatherPoint ->
+                                LocalDateTime.now(ZoneId.of(usersTimezone))
+                                        .isBefore(weatherPoint.getDateTime()))
+                        .toList();
+
+        return IntStream.range(0, weatherPointsAfterCurrentTime.size())
+                .filter(n -> n % 3 == 0)
+                .mapToObj(weatherPointsAfterCurrentTime::get)
+                .limit(4)
+                .toList();
     }
 
     @Override

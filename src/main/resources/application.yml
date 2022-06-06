@@ -1,5 +1,6 @@
 telegram:
   weather-bot:
+    username: user
     token: ${BOT_TOKEN:}
 
 client:
