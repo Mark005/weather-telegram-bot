@@ -2,9 +2,7 @@ package com.bmo.projects.weathertelegrambot;
 
 import com.bmo.projects.weathertelegrambot.configs.CommandSetter;
 import com.bmo.projects.weathertelegrambot.handling.UpdateHandler;
-import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
-import com.bmo.projects.weathertelegrambot.weather.service.ForecastService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -12,22 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Location;
-import org.telegram.telegrambots.meta.api.objects.LoginUrl;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Component

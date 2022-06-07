@@ -3,7 +3,6 @@ package com.bmo.projects.weathertelegrambot.handling.commands;
 import com.bmo.projects.weathertelegrambot.WeatherBot;
 import com.bmo.projects.weathertelegrambot.model.CommandEnum;
 import com.bmo.projects.weathertelegrambot.model.DayForecast;
-import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
 import com.bmo.projects.weathertelegrambot.utils.WeatherPrinterUtils;
 import com.bmo.projects.weathertelegrambot.weather.service.ForecastService;
