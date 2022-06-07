@@ -29,7 +29,10 @@ public class StartCommandHandler implements CommandHandler {
     public void handle(WeatherBot bot, Update update) {
         bot.execute(SendMessage.builder()
                 .chatId(UpdateUtils.extractStringChatId(update))
-                .text("message with keyboard")
+                .text("""
+                        Let's check the weather!
+                        Send your location or location which you want through
+                        attach -> location""")
                 .parseMode(ParseMode.HTML)
                 .disableWebPagePreview(false)
                 .replyMarkup(ReplyKeyboardMarkup.builder()
