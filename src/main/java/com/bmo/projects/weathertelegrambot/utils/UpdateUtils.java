@@ -3,11 +3,9 @@ package com.bmo.projects.weathertelegrambot.utils;
 import com.bmo.projects.weathertelegrambot.model.CommandEnum;
 import lombok.experimental.UtilityClass;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.MessageEntity;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @UtilityClass

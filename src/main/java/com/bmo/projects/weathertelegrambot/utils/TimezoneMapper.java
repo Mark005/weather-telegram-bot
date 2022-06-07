@@ -1,8 +1,11 @@
 package com.bmo.projects.weathertelegrambot.utils;
 
+import lombok.experimental.UtilityClass;
+
 /** The provided code is written by Tim Cooper:   tim@edval.com.au
  This code is available under the MIT licence:  https://opensource.org/licenses/MIT  */
 
+@UtilityClass
 public class TimezoneMapper {
 
     public static String latLngToTimezoneString(double lat, double lng)
