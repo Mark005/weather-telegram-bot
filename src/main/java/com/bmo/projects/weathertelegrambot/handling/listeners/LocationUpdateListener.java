@@ -4,7 +4,6 @@ import com.bmo.projects.weathertelegrambot.WeatherBot;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
 import com.bmo.projects.weathertelegrambot.weather.service.LocationStore;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class LocationUpdateListener implements UpdateListener {
     private final LocationStore locationStore;
 
-    @SneakyThrows
     @Override
     public void handle(WeatherBot bot, Update update) {
         if (!update.hasMessage() || !update.getMessage().hasLocation()) {
