@@ -1,8 +1,8 @@
 package com.bmo.projects.weathertelegrambot;
 
-import com.bmo.projects.weathertelegrambot.component.button.PrepareableBotApiMethod;
 import com.bmo.projects.weathertelegrambot.configs.CommandSetter;
 import com.bmo.projects.weathertelegrambot.handling.UpdateHandler;
+import com.bmo.projects.weathertelegrambot.handling.components.button.PrepareableBotApiMethod;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

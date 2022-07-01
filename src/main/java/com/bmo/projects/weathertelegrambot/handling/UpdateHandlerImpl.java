@@ -1,8 +1,8 @@
 package com.bmo.projects.weathertelegrambot.handling;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.component.button.AbstractHideableKeyboardButton;
 import com.bmo.projects.weathertelegrambot.handling.commands.CommandHandler;
+import com.bmo.projects.weathertelegrambot.handling.components.button.AbstractHideableKeyboardButton;
 import com.bmo.projects.weathertelegrambot.handling.listeners.UpdateListener;
 import com.bmo.projects.weathertelegrambot.model.CommandEnum;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
@@ -29,17 +29,15 @@ public class UpdateHandlerImpl implements UpdateHandler {
         updateListeners.forEach(updateListener -> updateListener.handle(bot, update));
 
         CommandEnum command = UpdateUtils.extractCommand(update);
-        if (command == null) {
-            return;
+        if (command != null) {
+            List<CommandHandler> commandHandlers = this.commandHandlers.stream()
+                    .filter(commandHandler -> commandHandler.getHandlingCommand() == command)
+                    .toList();
+            if (CollectionUtils.isEmpty(commandHandlers)) {
+                bot.sendUpdateResponseMessage("Sorry, but command no implemented yet", update);
+            }
+            commandHandlers.forEach(commandHandler -> commandHandler.handle(bot, update));
         }
-
-        List<CommandHandler> commandHandlers = this.commandHandlers.stream()
-                .filter(commandHandler -> commandHandler.getHandlingCommand() == command)
-                .toList();
-        if (CollectionUtils.isEmpty(commandHandlers)) {
-            bot.sendUpdateResponseMessage("Sorry, but command no implemented yet", update);
-        }
-        commandHandlers.forEach(commandHandler -> commandHandler.handle(bot, update));
 
         AbstractHideableKeyboardButton button = textToButton.get(UpdateUtils.extractMessageText(update));
         if (button != null) {
