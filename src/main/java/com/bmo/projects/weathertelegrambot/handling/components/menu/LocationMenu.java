@@ -18,15 +18,12 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @RequiredArgsConstructor
-public class MainMenu implements Menu {
+public class LocationMenu implements Menu {
 
     private final MenuService menuService;
-    private final AbstractHideableKeyboardButton localWeatherButton;
-    private final AbstractHideableKeyboardButton locationMenuButton;
-    private final AbstractHideableKeyboardButton todayWeatherButton;
-    private final AbstractHideableKeyboardButton sevenDaysWeatherButton;
-    private final AbstractHideableKeyboardButton subscribeButton;
-    private final AbstractHideableKeyboardButton unsubscribeButton;
+    private final AbstractHideableKeyboardButton sendLocationButton;
+    private final AbstractHideableKeyboardButton dropLocationButton;
+    private final AbstractHideableKeyboardButton backButton;
 
     @Override
     public void draw(String text, WeatherBot bot, Update update) {
@@ -43,16 +40,11 @@ public class MainMenu implements Menu {
                 .replyMarkup(PrepareableReplyKeyboardMarkup.builder()
                         .keyboard(Lists.newArrayList(
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        localWeatherButton,
-                                        locationMenuButton)),
+                                        sendLocationButton)),
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        todayWeatherButton)),
+                                        dropLocationButton)),
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        sevenDaysWeatherButton)),
-                                new PrepareableKeyboardRow(Lists.newArrayList(
-                                        subscribeButton)),
-                                new PrepareableKeyboardRow(Lists.newArrayList(
-                                        unsubscribeButton))))
+                                        backButton))))
                         .oneTimeKeyboard(false)
                         .resizeKeyboard(true)
                         .selective(true)
