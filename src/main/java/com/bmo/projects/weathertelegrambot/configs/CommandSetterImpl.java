@@ -2,9 +2,7 @@ package com.bmo.projects.weathertelegrambot.configs;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
 import com.bmo.projects.weathertelegrambot.model.CommandEnum;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 
@@ -14,7 +12,6 @@ import java.util.List;
 public class CommandSetterImpl implements CommandSetter {
 
     @Override
-    @SneakyThrows
     public void setCommands(WeatherBot bot) {
         setCommands(bot, BotStatusEnum.ONLINE);
 
@@ -22,8 +19,7 @@ public class CommandSetterImpl implements CommandSetter {
         Runtime.getRuntime().addShutdownHook(haltedHook);
     }
 
-    @SneakyThrows
-    private void setCommands(TelegramLongPollingBot bot, BotStatusEnum status) {
+    private void setCommands(WeatherBot bot, BotStatusEnum status) {
         bot.execute(getRussianCommands(status));
         bot.execute(getEnglishCommands(status));
     }

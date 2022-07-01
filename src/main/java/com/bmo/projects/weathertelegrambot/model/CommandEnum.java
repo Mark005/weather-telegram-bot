@@ -10,12 +10,8 @@ import java.util.stream.Stream;
 @Getter
 @RequiredArgsConstructor
 public enum CommandEnum {
-
     START("/start"),
-    STATUS("/status"),
-    LOCAL_WEATHER("Current weather"),
-    TODAY_WEATHER("Today's weather"),
-    SEVEN_DAYS_WEATHER("7 Days forecast");
+    STATUS("/status");
 
     private final String command;
 
