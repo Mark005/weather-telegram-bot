@@ -10,7 +10,11 @@ import java.util.stream.Stream;
 @Getter
 @RequiredArgsConstructor
 public enum ButtonEnum {
+
+    LOCATION("Location"),
     SEND_MY_LOCATION("Send my location"),
+    DROP_LOCATION("Drop location"),
+    BACK("Back"),
     LOCAL_WEATHER("Current weather"),
     TODAY_WEATHER("Today's weather"),
     SEVEN_DAYS_WEATHER("7 Days forecast"),
@@ -18,16 +22,4 @@ public enum ButtonEnum {
     UNSUBSCRIBE("Unsubscribe from daily weather");
 
     private final String buttonText;
-
-    @Nullable
-    public static ButtonEnum getEnumByCommand(String text) {
-        if (!StringUtils.hasText(text)) {
-            return null;
-        }
-
-        return Stream.of(ButtonEnum.values())
-                .filter(buttonEnum -> buttonEnum.getButtonText().equals(text))
-                .findFirst()
-                .orElse(null);
-    }
 }
