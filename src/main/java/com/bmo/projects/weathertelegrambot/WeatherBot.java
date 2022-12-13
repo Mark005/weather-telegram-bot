@@ -2,7 +2,7 @@ package com.bmo.projects.weathertelegrambot;
 
 import com.bmo.projects.weathertelegrambot.configs.CommandSetter;
 import com.bmo.projects.weathertelegrambot.handling.UpdateHandler;
-import com.bmo.projects.weathertelegrambot.handling.components.button.PrepareableBotApiMethod;
+import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button.PrepareableBotApiMethod;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -57,11 +57,19 @@ public class WeatherBot extends TelegramLongPollingBot {
         updateHandler.handle(this, update);
     }
 
-    public Message sendUpdateResponseMessage(String text, Update update) {
+    public Message sendChatMessage(String text, Update update) {
         return execute(
                 SendMessage.builder()
                         .text(text)
                         .chatId(UpdateUtils.extractStringChatId(update))
+                        .build());
+    }
+
+    public Message sendChatMessage(String text, Long chatId) {
+        return execute(
+                SendMessage.builder()
+                        .text(text)
+                        .chatId(String.valueOf(chatId))
                         .build());
     }
 
@@ -75,9 +83,8 @@ public class WeatherBot extends TelegramLongPollingBot {
     }
 
     public <T extends Serializable, Method extends PrepareableBotApiMethod<T>> T executePrepareable(Method method,
-                                                                                                    WeatherBot bot,
                                                                                                     Update update) {
-        method.prepare(bot, update);
+        method.prepare(this, update);
         return execute(method);
     }
 }

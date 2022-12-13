@@ -1,6 +1,5 @@
-package com.bmo.projects.weathertelegrambot.handling.components.keyboard;
+package com.bmo.projects.weathertelegrambot.handling.components.infrastructure.keyboard;
 
-import com.bmo.projects.weathertelegrambot.handling.components.Prepareable;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.telegram.telegrambots.meta.api.interfaces.BotApiObject;
 import org.telegram.telegrambots.meta.api.interfaces.Validable;

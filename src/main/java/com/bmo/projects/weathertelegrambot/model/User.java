@@ -18,6 +18,7 @@ public class User {
     private Long id;
     private Long chatId;
     private Location location;
-    private Boolean isSubscribed;
+    @Builder.Default
+    private Boolean isSubscribed = false;
     private ZonedDateTime nextUpdateTime;
 }

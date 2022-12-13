@@ -1,7 +1,7 @@
-package com.bmo.projects.weathertelegrambot.handling.components;
+package com.bmo.projects.weathertelegrambot.handling.components.infrastructure.keyboard;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.handling.components.button.AbstractHideableKeyboardButton;
+import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button.AbstractHideableKeyboardButton;
 import org.telegram.telegrambots.meta.api.interfaces.Validable;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiValidationException;

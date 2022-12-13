@@ -1,4 +1,4 @@
-package com.bmo.projects.weathertelegrambot.configs;
+package com.bmo.projects.weathertelegrambot.configs.properties;
 
 import lombok.Getter;
 import lombok.Setter;
