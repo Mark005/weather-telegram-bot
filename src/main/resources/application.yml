@@ -6,3 +6,15 @@ telegram:
 client:
   open-meteo:
     base-url: ${OPEN_METEO_BASE_URL:}
+
+mermaid-statemachine:
+  settings:
+    schema:
+      state-configuration-config:
+        validate-unused-action-beans: error
+        validate-states-without-action: error
+
+notification:
+  notification-time: '11:45'
+  check-sec: 60
+  schedule: 12h

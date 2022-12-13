@@ -1,6 +1,6 @@
 package com.bmo.projects.weathertelegrambot.service;
 
-import com.bmo.projects.weathertelegrambot.configs.NotificationProperties;
+import com.bmo.projects.weathertelegrambot.configs.properties.NotificationProperties;
 import com.bmo.projects.weathertelegrambot.model.User;
 import com.bmo.projects.weathertelegrambot.utils.TimezoneMapper;
 import lombok.RequiredArgsConstructor;

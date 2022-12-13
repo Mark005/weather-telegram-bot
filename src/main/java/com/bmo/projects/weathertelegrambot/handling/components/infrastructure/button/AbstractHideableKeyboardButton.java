@@ -1,4 +1,4 @@
-package com.bmo.projects.weathertelegrambot.handling.components.button;
+package com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
 import org.telegram.telegrambots.meta.api.objects.Update;

@@ -1,7 +1,7 @@
 package com.bmo.projects.weathertelegrambot.service;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.configs.NotificationProperties;
+import com.bmo.projects.weathertelegrambot.configs.properties.NotificationProperties;
 import com.bmo.projects.weathertelegrambot.model.User;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.WeatherPrinterUtils;

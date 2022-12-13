@@ -1,12 +1,13 @@
 package com.bmo.projects.weathertelegrambot.handling.components.button.location;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.handling.components.button.AbstractHideableKeyboardButton;
-import com.bmo.projects.weathertelegrambot.handling.components.button.ButtonEnum;
+import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button.AbstractHideableKeyboardButton;
+import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button.ButtonEnum;
 import com.bmo.projects.weathertelegrambot.model.User;
 import com.bmo.projects.weathertelegrambot.service.UserService;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -25,8 +26,7 @@ public class SendLocationButton extends AbstractHideableKeyboardButton {
 
 
     @Override
-    public void onClick(WeatherBot bot, Update update) {
-
+    public void onClick(StateMachine<String, String> stateMachine, Update update) {
     }
 
     @Override

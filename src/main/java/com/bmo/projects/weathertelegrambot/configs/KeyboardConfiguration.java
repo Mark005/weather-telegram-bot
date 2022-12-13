@@ -1,6 +1,6 @@
 package com.bmo.projects.weathertelegrambot.configs;
 
-import com.bmo.projects.weathertelegrambot.handling.components.button.AbstractHideableKeyboardButton;
+import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.button.AbstractHideableKeyboardButton;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

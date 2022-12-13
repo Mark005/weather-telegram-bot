@@ -1,7 +1,6 @@
-package com.bmo.projects.weathertelegrambot.handling.components;
+package com.bmo.projects.weathertelegrambot.handling.components.infrastructure.keyboard;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.handling.components.keyboard.PrepareableReplyKeyboard;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
