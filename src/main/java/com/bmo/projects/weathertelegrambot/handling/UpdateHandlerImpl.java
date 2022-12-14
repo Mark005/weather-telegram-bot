@@ -32,15 +32,21 @@ public class UpdateHandlerImpl implements UpdateHandler {
         StateMachine<String, String> stateMachine =
                 stateMachineCacheService.getOrCreateForUser(UpdateUtils.extractSenderId(update), update);
 
-        updateListeners.forEach(updateListener -> updateListener.handle(stateMachine, update));
-
-        Optional.ofNullable(UpdateUtils.extractCommand(update))
+        CommandHandler commandHandler = Optional.ofNullable(UpdateUtils.extractCommand(update))
                 .map(commandHandlerMap::get)
-                .ifPresent(commandHandler -> commandHandler.handle(stateMachine, update));
+                .orElse(null);
+        if (commandHandler != null) {
+            commandHandler.handle(stateMachine, update);
+            return;
+        }
 
-        Optional.ofNullable(UpdateUtils.extractMessageText(update))
-                .map(textToButton::get)
-                .ifPresent(button -> button.onClick(stateMachine, update));
+        AbstractHideableKeyboardButton button = Optional.ofNullable(UpdateUtils.extractMessageText(update))
+                .map(textToButton::get).orElse(null);
+        if (button != null) {
+            button.onClick(stateMachine, update);
+            return;
+        }
 
+        updateListeners.forEach(updateListener -> updateListener.handle(stateMachine, update));
     }
 }
