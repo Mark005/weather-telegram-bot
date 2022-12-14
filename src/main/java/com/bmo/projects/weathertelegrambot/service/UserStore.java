@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface UserStore {
     Optional<User> findById(Long id);
 
+    List<User> getAll();
+
     User save(User user);
 
     List<User> getByNextUpdateTimeBefore(ZonedDateTime timeAfter);

@@ -14,6 +14,15 @@ flowchart LR
    
    locationMenu -- countrySelectEvent --> countryInputWaiting
    
-   mainMenu -- subscribeEvent --> subscriptionMenu
-   subscriptionMenu --> mainMenu
+   mainMenu -- subscriptionMenuEvent --> subscriptionMenu
+   subscriptionMenu -- unsubscribeEvent --> unsubscribe --> subscriptionMenu
+   
+   subscriptionMenu -- subscribeEvent --> timeInputWaiting
+   timeInputWaiting -- backEvent --> subscriptionMenu
+   timeInputWaiting -- inputConsumedEvent --> subscribe
+   subscribe -- errorEvent --> timeInputWaiting
+   subscribe -- successEvent --> subscriptionMenu
+   
+   
+   subscriptionMenu -- backEvent --> mainMenu
 ```

@@ -7,9 +7,15 @@ import org.springframework.statemachine.StateMachine;
 import org.telegram.telegrambots.meta.api.objects.Location;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.time.LocalTime;
 import java.util.Optional;
 
-import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.*;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.CHAT_ID;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.LOCATION;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.MESSAGE_TEXT;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.PARSED_TIME;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.SENDER_ID;
+import static com.bmo.projects.weathertelegrambot.utils.context.ContextUtils.ContextVariables.UPDATE;
 
 @UtilityClass
 public class ContextUtils {
@@ -18,20 +24,26 @@ public class ContextUtils {
         SENDER_ID,
         CHAT_ID,
         UPDATE,
+        MESSAGE_TEXT,
         LOCATION,
-        MENU_MESSAGE;
+        MENU_MESSAGE,
+        PARSED_TIME;
     }
 
     public ContextData extractData(StateContext<String, String> context) {
         Long senderId = (Long) context.getExtendedState().getVariables().get(SENDER_ID);
         Long chatId = (Long) context.getExtendedState().getVariables().get(CHAT_ID);
-        Update update = (Update) context.getExtendedState().getVariables().get(UPDATE);
+        String messageText = (String) context.getExtendedState().getVariables().get(MESSAGE_TEXT);
         Location location = (Location) context.getExtendedState().getVariables().get(LOCATION);
+        Update update = (Update) context.getExtendedState().getVariables().get(UPDATE);
+        LocalTime parsedTime = (LocalTime) context.getExtendedState().getVariables().get(PARSED_TIME);
         return ContextData.builder()
                 .senderId(senderId)
                 .chatId(chatId)
-                .update(update)
+                .messageText(messageText)
                 .location(location)
+                .update(update)
+                .parsedTime(parsedTime)
                 .build();
     }
 

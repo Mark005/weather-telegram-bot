@@ -24,7 +24,7 @@ public class StateMachineCacheServiceImpl implements StateMachineCacheService {
     private final Cache<Long, StateMachine<String, String>> contexts =
             CacheBuilder.newBuilder()
                     .maximumSize(100)
-                    .expireAfterWrite(Duration.ofMinutes(1))
+                    .expireAfterWrite(Duration.ofMinutes(5))
                     .removalListener((RemovalListener<Long, StateMachine<String, String>>)
                             notification -> {
                                 notification.getValue().stopReactively().subscribe();
@@ -38,16 +38,13 @@ public class StateMachineCacheServiceImpl implements StateMachineCacheService {
         return Optional.ofNullable(contexts.getIfPresent(userId))
                 .orElseGet(() -> {
                     StateMachine<String, String> stateMachine = stateMachineFactory.getStateMachine();
-                    populate(update, stateMachine);
+                    ContextUtils.fillData(stateMachine, update);
                     stateMachine.startReactively().subscribe();
                     contexts.put(userId, stateMachine);
                     return stateMachine;
                 });
     }
 
-    private void populate(Update update, StateMachine<String, String> stateMachine) {
-        ContextUtils.fillData(stateMachine, update);
-    }
 
 
 }

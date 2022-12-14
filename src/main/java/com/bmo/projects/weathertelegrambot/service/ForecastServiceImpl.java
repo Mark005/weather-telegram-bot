@@ -69,7 +69,7 @@ public class ForecastServiceImpl implements ForecastService {
         return IntStream.range(0, weatherPointsAfterCurrentTime.size())
                 .filter(n -> n % 3 == 0)
                 .mapToObj(weatherPointsAfterCurrentTime::get)
-                .limit(4)
+                .limit(5)
                 .toList();
     }
 
