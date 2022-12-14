@@ -14,8 +14,9 @@ public enum ButtonEnum {
     CURRENT_WEATHER("Current weather"),
     TODAY_WEATHER("Today's weather"),
     SEVEN_DAYS_WEATHER("7 Days forecast"),
-    SUBSCRIBE("Subscribe on daily weather"),
-    UNSUBSCRIBE("Unsubscribe from daily weather");
 
+    SUBSCRIPTION_MENU("Subscribe on daily weather"),
+    SUBSCRIBE("Subscribe"),
+    UNSUBSCRIBE("Unsubscribe");
     private final String buttonText;
 }

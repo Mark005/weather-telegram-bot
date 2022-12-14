@@ -32,6 +32,8 @@ public class UpdateHandlerImpl implements UpdateHandler {
         StateMachine<String, String> stateMachine =
                 stateMachineCacheService.getOrCreateForUser(UpdateUtils.extractSenderId(update), update);
 
+        updateListeners.forEach(updateListener -> updateListener.handle(stateMachine, update));
+
         Optional.ofNullable(UpdateUtils.extractCommand(update))
                 .map(commandHandlerMap::get)
                 .ifPresent(commandHandler -> commandHandler.handle(stateMachine, update));
@@ -40,6 +42,5 @@ public class UpdateHandlerImpl implements UpdateHandler {
                 .map(textToButton::get)
                 .ifPresent(button -> button.onClick(stateMachine, update));
 
-        updateListeners.forEach(updateListener -> updateListener.handle(stateMachine, update));
     }
 }

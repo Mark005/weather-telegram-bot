@@ -1,6 +1,5 @@
 package com.bmo.projects.weathertelegrambot.service;
 
-import com.bmo.projects.weathertelegrambot.configs.properties.NotificationProperties;
 import com.bmo.projects.weathertelegrambot.model.User;
 import com.bmo.projects.weathertelegrambot.utils.TimezoneMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.time.ZonedDateTime;
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
     private final UserService userService;
-    private final NotificationProperties notificationProperties;
 
     @Override
     public boolean isUserSubscribed(Long userId) {
@@ -27,7 +25,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void subscribe(Long userId) {
+    public void subscribe(Long userId, LocalTime notificationTime) {
         User user = userService.getById(userId);
 
         Location userLocation = user.getLocation();
@@ -42,9 +40,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(
                 LocalDateTime.of(
                         LocalDate.now(),
-                        notificationProperties.getNotificationTime()), zoneId);
+                        notificationTime), zoneId);
 
-        if (localTime.isAfter(notificationProperties.getNotificationTime())) {
+        if (localTime.isAfter(notificationTime)) {
             zonedDateTime = zonedDateTime.plusDays(1);
         }
 
@@ -57,6 +55,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public void unsubscribe(Long userId) {
         User user = userService.getById(userId);
         user.setIsSubscribed(false);
+        user.setNotificationTime(null);
         user.setNextUpdateTime(null);
         userService.save(user);
     }

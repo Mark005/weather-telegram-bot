@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Location;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -25,14 +26,12 @@ public class Notifier {
 
     @Scheduled(timeUnit = TimeUnit.SECONDS, fixedDelayString = "${notification.check-sec}")
     public void notifyUser() {
-        List<User> users = userService.getAllUsersToSendForecast()
+        userService.getAllUsersToSendForecast()
                 .stream()
                 .peek(this::send)
                 .peek(user -> user.setNextUpdateTime(
-                        user.getNextUpdateTime().plus(notificationProperties.getSchedule())))
-                .toList();
-
-        userService.saveAll(users);
+                        user.getNextUpdateTime().plus(1, ChronoUnit.DAYS)))
+                .forEach(userService::save);
     }
 
     private void send(User user) {

@@ -6,7 +6,6 @@ import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.ke
 import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.keyboard.PrepareableReplyKeyboardMarkup;
 import com.bmo.projects.weathertelegrambot.handling.components.infrastructure.keyboard.SendMessagePrepareable;
 import com.bmo.projects.weathertelegrambot.utils.UpdateUtils;
-import com.bmo.projects.weathertelegrambot.utils.context.ContextData;
 import com.bmo.projects.weathertelegrambot.utils.context.ContextUtils;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -16,20 +15,18 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-@Component("mainMenu")
+@Component("subscriptionMenu")
 @RequiredArgsConstructor
-public class MainMenu implements Action<String, String> {
+public class SubscriptionMenu implements Action<String, String> {
+
     private final WeatherBot bot;
-    private final AbstractHideableKeyboardButton currentWeatherButton;
-    private final AbstractHideableKeyboardButton locationMenuButton;
-    private final AbstractHideableKeyboardButton todayWeatherButton;
-    private final AbstractHideableKeyboardButton sevenDaysWeatherButton;
-    private final AbstractHideableKeyboardButton subscriptionMenuButton;
+    private final AbstractHideableKeyboardButton subscribeButton;
+    private final AbstractHideableKeyboardButton unsubscribeButton;
+    private final AbstractHideableKeyboardButton backButton;
 
     @Override
     public void execute(StateContext<String, String> context) {
-        ContextData contextData = ContextUtils.extractData(context);
-        Update update = contextData.getUpdate();
+        Update update = ContextUtils.extractData(context).getUpdate();
         ContextUtils.extractAndErase(context, ContextUtils.ContextVariables.MENU_MESSAGE, String.class)
                 .ifPresent(message -> bot.executePrepareable(getMessage(update, message), update));
     }
@@ -43,19 +40,15 @@ public class MainMenu implements Action<String, String> {
                 .replyMarkup(PrepareableReplyKeyboardMarkup.builder()
                         .keyboard(Lists.newArrayList(
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        currentWeatherButton,
-                                        locationMenuButton)),
+                                        subscribeButton)),
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        todayWeatherButton)),
+                                        unsubscribeButton)),
                                 new PrepareableKeyboardRow(Lists.newArrayList(
-                                        sevenDaysWeatherButton)),
-                                new PrepareableKeyboardRow(Lists.newArrayList(
-                                        subscriptionMenuButton))))
+                                        backButton))))
                         .oneTimeKeyboard(false)
                         .resizeKeyboard(true)
                         .selective(true)
                         .build())
                 .build();
     }
-
 }
