@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.telegram.telegrambots.meta.api.objects.Location;
 
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -19,6 +20,7 @@ public class User {
     private Long id;
     private Long chatId;
     private Location location;
+    private ZoneId zoneId;
     @Builder.Default
     private Boolean isSubscribed = false;
     private LocalTime notificationTime;

@@ -1,7 +1,6 @@
 package com.bmo.projects.weathertelegrambot.service;
 
 import com.bmo.projects.weathertelegrambot.WeatherBot;
-import com.bmo.projects.weathertelegrambot.configs.properties.NotificationProperties;
 import com.bmo.projects.weathertelegrambot.model.User;
 import com.bmo.projects.weathertelegrambot.model.WeatherPoint;
 import com.bmo.projects.weathertelegrambot.utils.WeatherPrinterUtils;
@@ -21,7 +20,6 @@ public class Notifier {
     private final UserService userService;
     private final ForecastService forecastService;
     private final WeatherBot bot;
-    private final NotificationProperties notificationProperties;
 
 
     @Scheduled(timeUnit = TimeUnit.SECONDS, fixedDelayString = "${notification.check-sec}")
