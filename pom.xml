@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.bmo.projects</groupId>
     <artifactId>weather-telegram-bot</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>weather-telegram-bot</name>
     <description>weather-telegram-bot</description>
     <properties>
