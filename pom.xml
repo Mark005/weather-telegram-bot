@@ -89,7 +89,7 @@
         <dependency>
             <groupId>com.bmo</groupId>
             <artifactId>mermaid-state-machine-model-factory</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
@@ -152,5 +152,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Mermaid parser Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Mark005/weather-telegram-bot</url>
+        </repository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/Mark005/mermaid-state-machine-model-factory</url>
+        </repository>
+    </repositories>
 
 </project>

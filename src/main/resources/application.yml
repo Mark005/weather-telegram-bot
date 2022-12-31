@@ -15,6 +15,5 @@ mermaid-statemachine:
         validate-states-without-action: error
 
 notification:
-  notification-time: '11:45'
   check-sec: 60
   schedule: 12h
