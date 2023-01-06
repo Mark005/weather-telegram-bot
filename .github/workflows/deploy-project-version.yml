@@ -1,0 +1,49 @@
+name: Deploy on server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get current branch name
+        id: branch-name-getter
+        run: |
+          echo BRANCH_NAME=$(git branch --show-current) >> $GITHUB_OUTPUT
+
+      - name: Test branch name
+        run: echo ${{ steps.branch-name-getter.outputs.BRANCH_NAME }}
+
+      - name: Deploy
+        uses: matheusvanzan/sshpass-action@v2
+        with:
+          host: ${{ secrets.SSH_SERVER_IP }}
+          user: ${{ secrets.SSH_USERNAME }}
+          pass: ${{ secrets.SSH_PASSWORD }}
+          run: |
+            IFS='/'
+
+            read -a REPO_FULL_NAME <<< "${{ github.repository }}"
+            PROJECT_NAME=${REPO_FULL_NAME[1]}
+            
+            echo "project name : ${PROJECT_NAME}"
+            echo "${{ github.repositoryUrl }}"
+            
+            mkdir -p /home/${REPO_FULL_NAME[1]}
+            
+            cd /home/${REPO_FULL_NAME[1]}
+            
+            git pull || git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            git checkout ${{ steps.branch-name-getter.outputs.BRANCH_NAME }}
+            
+            export USER_NAME=${{ secrets.USER_NAME }}
+            export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
+            
+            mvn -s ./.github/workflows/maven-settings.xml -B clean package --file pom.xml
+            
+            echo "Compose start"
+            docker-compose down
+            docker-compose up -d --build

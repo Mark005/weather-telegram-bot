@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  weather-telegram-bot:
+    container_name: weather-telegram-bot-container
+    build: .
+    ports:
+      - "8081:8080"
+    env_file:
+      - /home/secrets/.env.weather-bot
