@@ -36,8 +36,13 @@ jobs:
             
             cd /home/${REPO_FULL_NAME[1]}
             
-            git pull || git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            git config --global user.email "git.action@github.com"
+            git config --global user.name "CI Action"
+            
+            git pull --all --no-rebase || git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            git status
             git checkout ${{ steps.branch-name-getter.outputs.BRANCH_NAME }}
+            git reset --hard origin/${{ steps.branch-name-getter.outputs.BRANCH_NAME }}
             
             export USER_NAME=${{ secrets.USER_NAME }}
             export ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}
