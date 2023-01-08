@@ -1,10 +1,12 @@
 # Forecast telegram bot
 
-## Simple firecat bot based on Open-Meteo API https://open-meteo.com/en/docs
-## Has 3 type of forecast for selected location:
+## Available here https://t.me/BMOWeatherBot
+## Simple forecast bot based on Open-Meteo API https://open-meteo.com/en/docs
+## Has the following functionality:
 ### - Current weather
 ### - Today's weather for next 12 hours with 3 hours period
 ### - 7 days forecast
+### - Daily subscription on today's weather (you can select time to sending forecast)
 
 ## Preview
 
