@@ -17,4 +17,4 @@
 <img src="/images/forecast.jpg" width="400"/>
 
 ### Also bot has his own ONLINE/OFFLINE status
-<img src="/images/bot-status.png" width="400"/>
+<img src="/images/bot-status.png" width="400"/>fgfgfg
