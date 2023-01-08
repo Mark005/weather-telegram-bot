@@ -36,7 +36,7 @@ jobs:
             
             cd /home/${REPO_FULL_NAME[1]}
             
-            git pull || git clone ${{ github.server_url }}/${{ github.repository }}.git .
+            git pull --all || git clone ${{ github.server_url }}/${{ github.repository }}.git .
             git checkout ${{ steps.branch-name-getter.outputs.BRANCH_NAME }}
             
             export USER_NAME=${{ secrets.USER_NAME }}
