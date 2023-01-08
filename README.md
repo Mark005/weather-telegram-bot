@@ -6,7 +6,7 @@
 ### - Current weather
 ### - Today's weather for next 12 hours with 3 hours period
 ### - 7 days forecast
-### - Daily subscription on today's weather (you can select time to sending forecast)
+### - Daily subscription on today's weer (you can select time to sending forecast)
 
 ## Preview
 
