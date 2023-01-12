@@ -1,6 +1,8 @@
-FROM openjdk:17
-RUN echo PATH=$PATH;sudo ls $PATH;export JAR_FILENAME=$(/usr/bin/find ./target -type f -name "*.jar" -printf "%f\n");echo $JAR_FILENAME;
-COPY target/$JAR_FILENAME /temp/$JAR_FILENAME
+FROM eclipse-temurin:17-jre-alpine
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/temp/$JAR_FILENAME"]
-CMD ["echo", "$JAR_FILENAME"]
+COPY target/*.jar /temp/
+CMD export JAR_FILENAME=$(ls /temp | grep .jar); \
+    echo "---------------"; \
+    echo $JAR_FILENAME; \
+    echo "---------------"; \
+    /bin/sh -c 'java -jar /temp/$JAR_FILENAME';
